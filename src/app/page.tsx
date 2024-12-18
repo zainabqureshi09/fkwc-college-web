@@ -4,9 +4,12 @@ export default function HomePage() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-white">
       {/* Heading */}
-      <h1 className="text-3xl text-center font-serif mb-6 p-1 text-blue-800">
-        Welcome Firoza Khatoon Women College
+      <h1 className="text-4xl text-center font-serif mb-6 p-1 text-blue-800">
+        Welcome
       </h1>
+      <h1 className="text-4xl text-center font-serif mb-6 p-1 text-blue-800">To</h1>
+      <h1 className="text-4xl text-center font-serif mb-6 p-1 text-blue-800"> Firoza Khatoon Women College</h1>
+
       <section className="mb-8 text-center">
 
       {/* Local Video */}
