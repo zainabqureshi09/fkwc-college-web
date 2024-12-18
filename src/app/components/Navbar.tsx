@@ -43,7 +43,7 @@ export default function Navbar() {
           <li className='p-5 text-blue-800 hover:text-blue-400 font-serif text-center'><Link href="/contact"><MdContactPhone size={30} className='text-blue-800 hover:text-blue-400' />Contact</Link></li>
           <li className='p-5 text-blue-800 hover:text-blue-400 font-serif text-center'><Link href="/student"><PiStudentFill size={30} className='text-blue-800 hover:text-blue-400' />Our Students</Link></li>
           <li className='p-5 text-blue-800 hover:text-blue-400 font-serif text-center'><Link href="/faculty"><BsMicrosoftTeams size={30} className='text-blue-800 hover:text-blue-400' />Our Faculty</Link></li>
-          <li className='p-5 text-blue-800 hover:text-blue-400 font-serif text-center'><Link href="https://elevenlabs.io/app/talk-to?agent_id=AU2KRyGpfAaERGx9pTvR" target='blank'><FaRobot size={30} className='text-blue-800 hover:text-blue-400' />Our AI Agent</Link></li>
+          <li className='p-5 text-blue-800 hover:text-blue-400 font-serif text-center'><Link href="https://firoza-assistant.vercel.app" target='blank'><FaRobot size={30} className='text-blue-800 hover:text-blue-400' />Our AI Agent</Link></li>
           </ul>
         </div>
         <button 
@@ -63,7 +63,7 @@ export default function Navbar() {
           <li className=' p-5 text-blue-800 hover:text-blue-500 font-serif text-right'><Link href="/contact" onClick={() => setIsMenuOpen(false)}><MdContactPhone size={20} className='text-blue-800 hover:text-blue-400' />Contact</Link></li>
           <li className=' p-5 text-blue-800 hover:text-blue-500 font-serif text-right'><Link href="/student" onClick={() => setIsMenuOpen(false)}><PiStudentFill size={20} className='text-blue-800 hover:text-blue-400' />Our Students</Link></li>
           <li className=' p-5 text-blue-800 hover:text-blue-500 font-serif text-right'><Link href="/faculty" onClick={() => setIsMenuOpen(false)}><BsMicrosoftTeams size={20} className='text-blue-800 hover:text-blue-400' />Our Faculty</Link></li>
-          <li className=' p-5 text-blue-800 hover:text-blue-500 font-serif text-right'><Link href="https://elevenlabs.io/app/talk-to?agent_id=AU2KRyGpfAaERGx9pTvR" target='blank' onClick={() => setIsMenuOpen(false)}><FaRobot size={20} className='text-blue-800 hover:text-blue-400' />Our AI Agent</Link></li>
+          <li className=' p-5 text-blue-800 hover:text-blue-500 font-serif text-right'><Link href="https://firoza-assistant.vercel.app" target='blank' onClick={() => setIsMenuOpen(false)}><FaRobot size={20} className='text-blue-800 hover:text-blue-400' />Our AI Agent</Link></li>
 
           </ul>
         </div>
