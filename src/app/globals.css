@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+nav {
+ position: relative;
+  top: 0; /* Top se 0 spacing */
+  left: 0;
+  height: 140px;
+  width: 100%; /* Puri screen ki width */
+  z-index: 1000; /* Navbar ko sabse upar le jata hai */
+  background-color: white; /* Background dena zaroori hai taake content ke sath mix na ho */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: shadow for better visibility */
+}
+
+button {
+  cursor: pointer;
+}
+
+p{
+  font-size: 20px;
+}
+
+body {
+  font-family: 'CustomFont', sans-serif;
+}
+/* styles/globals.css */
+.chatbot-icon {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: #2563eb; /* Blue */
+  color: white;
+  padding: 1rem;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
+p{
+  font-size: 15px;
+}
+
