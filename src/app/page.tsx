@@ -18,6 +18,7 @@ export default function HomePage() {
           height="900" // Custom height
           controls
           className="rounded-md border-2 border-gray-300 shadow-md"
+          poster="/thumbnail.png" 
         >
           <source src="/backgroundvid.mp4" type="video/mp4" />
           Your browser does not support the video tag.
