@@ -1,78 +1,149 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { Merienda } from "next/font/google";
+
+const merienda = Merienda({ subsets: ["latin"], weight: "700" });
+
+// Dynamic Cursor Effect
+const cursorColors = ["#1E90FF", "#FF4500", "#32CD32", "#FFD700"];
+const typingTexts = ["Empowering Women Through Education", "Building a Brighter Future", "Join Us Today!"];
+
 export default function AboutPage() {
+  const [displayText, setDisplayText] = useState("");
+  const [textIndex, setTextIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [cursorColorIndex, setCursorColorIndex] = useState(0);
+
+  useEffect(() => {
+    const typingSpeed = isDeleting ? 50 : 150;
+    const timeout = setTimeout(() => {
+      if (!isDeleting && charIndex < typingTexts[textIndex].length) {
+        setDisplayText((prev) => prev + typingTexts[textIndex][charIndex]);
+        setCharIndex(charIndex + 1);
+      } else if (isDeleting && charIndex > 0) {
+        setDisplayText((prev) => prev.slice(0, -1));
+        setCharIndex(charIndex - 1);
+      } else if (!isDeleting && charIndex === typingTexts[textIndex].length) {
+        setIsDeleting(true);
+        setTimeout(() => setIsDeleting(false), 1000);
+      } else {
+        setIsDeleting(false);
+        setTextIndex((prev) => (prev + 1) % typingTexts.length);
+        setCharIndex(0);
+        setCursorColorIndex((prev) => (prev + 1) % cursorColors.length);
+      }
+    }, typingSpeed);
+    return () => clearTimeout(timeout);
+  }, [charIndex, isDeleting]);
+
   return (
-    <div className="container mx-auto px-6 py-10">
-      <h1 className="text-4xl font-bold text-center mb-6">About Us</h1>
-      <p className="text-lg text-gray-700 leading-7">
-        Firoza Khatoon Women&apos;s College has been a beacon of women&apos;s education
-        since its inception in 2018. Founded with a vision to uplift and empower
-        women through academic excellence and holistic development, the college
-        has continuously worked to provide quality education in an inclusive,
-        safe, and nurturing environment. Our institution is dedicated to
-        fostering the intellectual, social, emotional, and physical development
-        of its students. We focus on imparting strong moral values alongside
-        academic knowledge, preparing young women to face life&apos;s challenges
-        with confidence and integrity. Over the years, the college has adopted
-        innovative teaching methods, organized various co-curricular activities,
-        and conducted skill-building workshops to equip students with the
-        necessary tools to thrive in the modern world. At Firoza Khatoon Women&apos;s
-        College, education is more than just classroom learning—it&apos;s about
-        building character, promoting self-reliance, and encouraging leadership.
-        Our faculty members are committed to guiding students through
-        mentorship, personal attention, and continuous support, ensuring every
-        student reaches her potential. The college&apos;s environment encourages
-        active participation, critical thinking, and creativity, enabling
-        students to achieve academic success while growing into socially
-        responsible citizens. By fostering a sense of community and
-        collaboration, we aim to produce confident and capable women who
-        contribute positively to their families, society, and the nation. As we
-        continue to grow, we remain steadfast in our mission to inspire,
-        educate, and empower women to lead fulfilling and impactful lives.
-      </p>
-      <br />
-      <br />
-        <div>
-          <h2 className="text-2xl font-semibold mb-2">Our Vision</h2>
-          <p className="text-lg text-gray-700 leading-7">
-            At Firoza Khatoon Women&apos;s College, we envision a future where women
-            are empowered to become leaders, thinkers, and contributors to
-            society. Our vision is to cultivate a dynamic educational
-            environment that nurtures intellectual growth, social
-            responsibility, and moral integrity. We aspire to shape young women
-            into confident individuals who are equipped with the knowledge,
-            skills, and values to excel in all spheres of life—academics,
-            professional careers, and personal endeavors. By prioritizing
-            innovation, critical thinking, and holistic development, we aim to
-            create a society where women play pivotal roles in driving progress,
-            fostering equality, and uplifting their communities.
+    <main>
+      {/* Hero Section */}
+      <section className="relative w-full h-[450px] flex items-center justify-center text-center bg-[url('/image1.webp')] bg-cover bg-center">
+        <div className="absolute top-0 left-0 w-full h-full bg-black/50 backdrop-blur-sm"></div>
+        <motion.div
+          className="relative z-10 text-white px-6"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <h1 className={`${merienda.className} text-5xl md:text-6xl font-bold drop-shadow-lg`}>
+            About Us
+          </h1>
+          <p className="mt-4 text-lg md:text-2xl flex justify-center">
+            {displayText}
+            <motion.span
+              className="w-2 h-6 md:h-7 inline-block ml-1"
+              style={{ backgroundColor: cursorColors[cursorColorIndex] }}
+              animate={{ opacity: [1, 0, 1] }}
+              transition={{ duration: 0.8, repeat: Infinity }}
+            ></motion.span>
           </p>
-        </div>
-        <br />
-        <br />
-        <div>
-          <h2 className="text-2xl font-semibold mb-2">Our Mission</h2>
-          <p className="text-lg text-gray-700 leading-7">
-            The mission of Firoza Khatoon Women&apos;s College is to provide women
-            with quality education that empowers them to realize their full
-            potential. Since its establishment in 2018, the college has been
-            committed to creating an inclusive and nurturing environment where
-            students are encouraged to excel academically, grow morally, and
-            develop life skills that prepare them for future challenges. Through
-            a blend of academic excellence, co-curricular activities, and
-            personality development programs, we aim to build confident,
-            independent, and socially responsible individuals. Our mission
-            focuses on fostering a love for learning, promoting self-reliance,
-            and encouraging leadership qualities. We emphasize the importance of
-            critical thinking, creativity, and compassion, ensuring our students
-            emerge as well-rounded individuals. We also prioritize career
-            readiness by offering counseling, guidance, and skills-based
-            workshops, empowering our students to pursue their ambitions with
-            confidence. By working closely with families and the community, we
-            strive to create a supportive ecosystem that champions women&apos;s
-            education as a powerful tool for personal and societal
-            transformation.
+        </motion.div>
+      </section>
+
+      {/* About Content Section */}
+      <section className="container mx-auto px-6 py-20">
+        <motion.div
+          className="max-w-5xl mx-auto text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          <h2 className={`${merienda.className} text-4xl font-bold text-blue-700`}>Who We Are</h2>
+          <p className="text-lg text-gray-700 leading-7 mt-4">
+            Firoza Khatoon Women&apos;s College has been a beacon of education since
+            its inception in 2018. Our mission is to empower women with academic
+            excellence and holistic development, creating a future where they
+            can lead with confidence and integrity.
           </p>
+        </motion.div>
+
+        {/* Grid Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12">
+          {/* Left Side (Text) */}
+          <motion.div
+            className="space-y-6"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <h2 className={`${merienda.className} text-2xl font-semibold text-blue-700`}>Our Vision</h2>
+            <p className="text-lg text-gray-700 leading-7">
+              We envision a future where women are leaders, thinkers, and
+              changemakers. Our focus is to cultivate an educational environment
+              that nurtures intellectual growth, social responsibility, and
+              moral integrity.
+            </p>
+
+            <h2 className={`${merienda.className} text-2xl font-semibold text-blue-700`}>Our Mission</h2>
+            <p className="text-lg text-gray-700 leading-7">
+              Our mission is to provide women with quality education that
+              empowers them to realize their full potential. We focus on a blend
+              of academics, personality development, and leadership training to
+              prepare our students for real-world success.
+            </p>
+          </motion.div>
+
+          {/* Right Side (Image) */}
+          <motion.div
+            className="overflow-hidden rounded-lg shadow-lg"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <Image
+              src="/image3.jpeg"
+              alt="Campus"
+              width={600}
+              height={400}
+              className="w-full h-auto rounded-lg object-cover"
+            />
+          </motion.div>
         </div>
-      </div>
-  
+      </section>
+
+      {/* Call to Action */}
+      <section className="text-blue-700 py-20 text-center">
+        <h2 className={`${merienda.className} text-3xl font-bold`}>Join Our College Today</h2>
+        <p className="mt-4 text-lg">
+          Take the next step toward a brighter future with us.
+        </p>
+        <motion.a
+          href="/admissions"
+          className="mt-6 inline-block px-8 py-4 bg-white text-blue-700 font-semibold text-lg rounded-full shadow-lg transition-all duration-500 hover:scale-105"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 1 }}
+        >
+          Apply Now
+        </motion.a>
+      </section>
+    </main>
   );
 }

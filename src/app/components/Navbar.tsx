@@ -1,73 +1,161 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import Image from 'next/image'
-import { useState } from 'react';
-import { FaHome } from "react-icons/fa";
-// import { TiInfo } from "react-icons/ti";
-import { MdOutlineHelpCenter } from "react-icons/md";
-// import { FaChalkboardTeacher } from "react-icons/fa";
-import { MdImportContacts } from "react-icons/md";
-// import { FaGraduationCap } from "react-icons/fa";
-import { MdContactPhone } from "react-icons/md";
-import { PiStudentFill } from "react-icons/pi";
-import { BsMicrosoftTeams } from "react-icons/bs";
-import { BiSolidInstitution } from "react-icons/bi";
-import { FaRobot } from "react-icons/fa6";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import Logo from "./Logo";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleMobileNavClick = () => {
+    setIsMenuOpen(false);
+  };
+
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Learning", path: "/subjects" },
+    { name: "Admissions", path: "/admissions" },
+    { name: "Contact", path: "/contact" },
+    { name: "Faculty", path: "/faculty" },
+  ];
 
   return (
-    <nav className="bg-white border-white">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-      <Link className='text-xl text-blue-800 font-serif text-left' href="/">
-      <Image
-      src="/logo.png"
-      width={130}
-      height={130}
-      quality={100}
-      alt="Picture of logo"
-      className='rounded-full p-4'
-    />
-    </Link>
-        <div className="hidden w-full md:block md:w-auto" id="navbar-default">
+    <>
+      <nav
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+          isScrolled ? "bg-white shadow-md py-2" : "bg-white py-3"
+        }`}
+      >
+        <div className="max-w-screen-xl mx-auto flex items-center justify-between px-6 h-[60px]">
+          {/* 🎓 Logo */}
+          <Link href="/" className="flex items-center">
+            <Logo />
+          </Link>
 
-          
-          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-white rounded-lg bg-white md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white md:dark:bg-white dark:border-gray-7080">
-          
-          <li className='p-5 text-blue-800 hover:text-blue-400 font-serif text-center'><Link href="/"><FaHome size={30} className='text-blue-800 hover:text-blue-400'/>Home</Link></li>
-          <li className='p-5 text-blue-800 hover:text-blue-400 font-serif text-center'><Link href="/about"><MdOutlineHelpCenter size={30} className='text-blue-800 hover:text-blue-400' />About</Link></li>
-          <li className='p-5 text-blue-800 hover:text-blue-400 font-serif text-center'><Link href="/subjects"><MdImportContacts size={30} className='text-blue-800 hover:text-blue-400' />Subjects</Link></li>
-          <li className='p-5 text-blue-800 hover:text-blue-400 font-serif text-center'><Link href="/admissions"><BiSolidInstitution  size={30} className='text-blue-800 hover:text-blue-400' />Admissions</Link></li>
-          <li className='p-5 text-blue-800 hover:text-blue-400 font-serif text-center'><Link href="/contact"><MdContactPhone size={30} className='text-blue-800 hover:text-blue-400' />Contact</Link></li>
-          <li className='p-5 text-blue-800 hover:text-blue-400 font-serif text-center'><Link href="/student"><PiStudentFill size={30} className='text-blue-800 hover:text-blue-400' />Our Students</Link></li>
-          <li className='p-5 text-blue-800 hover:text-blue-400 font-serif text-center'><Link href="/faculty"><BsMicrosoftTeams size={30} className='text-blue-800 hover:text-blue-400' />Our Faculty</Link></li>
-          <li className='p-5 text-blue-800 hover:text-blue-400 font-serif text-center'><Link href="https://firoza-assistant.vercel.app" target='blank'><FaRobot size={30} className='text-blue-800 hover:text-blue-400' />Our AI Agent</Link></li>
-          </ul>
-        </div>
-        <button 
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden focus:outline-none focus:ring-2 focus:ring-blue-200 dark:text-blue-200 dark:hover:bg-blue-500 dark:focus:ring-blue-700" aria-controls="navbar-default" aria-expanded="false"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          ☰
-        </button>
-      </div>
-      {isMenuOpen && (
-        <div className="md:hidden bg-gray-200">
-          <ul className='bg-gray-200'>
-            <li className='p-5 text-blue-800 hover:text-blue-500 font-serif text-right'><Link href="/" onClick={() => setIsMenuOpen(false)}><FaHome size={20} className='text-blue-800 hover:text-blue-400  '/>Home</Link></li>
-          <li className=' p-5 text-blue-800 hover:text-blue-500 font-serif text-right'><Link href="/about" onClick={() => setIsMenuOpen(false)}><MdOutlineHelpCenter size={20} className='text-blue-800 hover:text-blue-400' />About</Link></li>
-          <li className=' p-5 text-blue-800 hover:text-blue-500 font-serif text-right'><Link href="/subjects" onClick={() => setIsMenuOpen(false)}><MdImportContacts size={20} className='text-blue-800 hover:text-blue-400' /></Link>Subjects</li>
-          <li className='p-5 text-blue-800 hover:text-blue-500 font-serif text-right'><Link href="/admissions" onClick={() => setIsMenuOpen(false)}><BiSolidInstitution  size={20} className='text-blue-800 hover:text-blue-400' />Admissions</Link></li>
-          <li className=' p-5 text-blue-800 hover:text-blue-500 font-serif text-right'><Link href="/contact" onClick={() => setIsMenuOpen(false)}><MdContactPhone size={20} className='text-blue-800 hover:text-blue-400' />Contact</Link></li>
-          <li className=' p-5 text-blue-800 hover:text-blue-500 font-serif text-right'><Link href="/student" onClick={() => setIsMenuOpen(false)}><PiStudentFill size={20} className='text-blue-800 hover:text-blue-400' />Our Students</Link></li>
-          <li className=' p-5 text-blue-800 hover:text-blue-500 font-serif text-right'><Link href="/faculty" onClick={() => setIsMenuOpen(false)}><BsMicrosoftTeams size={20} className='text-blue-800 hover:text-blue-400' />Our Faculty</Link></li>
-          <li className=' p-5 text-blue-800 hover:text-blue-500 font-serif text-right'><Link href="https://firoza-assistant.vercel.app" target='blank' onClick={() => setIsMenuOpen(false)}><FaRobot size={20} className='text-blue-800 hover:text-blue-400' />Our AI Agent</Link></li>
+          {/* 📌 Desktop Menu */}
+          <div className="hidden md:flex space-x-6">
+            {navLinks.map(({ name, path }, index) => (
+              <Link
+                key={index}
+                href={path}
+                className="text-blue-700 text-lg hover:text-blue-400 transition font-medium"
+              >
+                {name}
+              </Link>
+            ))}
+          </div>
 
-          </ul>
+          {/* 🔑 Login & Signup Buttons */}
+          <div className="hidden md:flex space-x-4">
+            <Link href="/login">
+              <button className="px-5 py-2 border border-blue-700 text-blue-700 rounded-md hover:bg-blue-700 hover:text-white transition">
+                Login
+              </button>
+            </Link>
+            <Link href="/signup">
+              <button className="px-5 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800 transition">
+                Sign Up
+              </button>
+            </Link>
+          </div>
+
+          {/* 📱 Mobile Menu Button */}
+          <button
+            className="md:hidden text-3xl text-blue-800 focus:outline-none"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? "✕" : "☰"}
+          </button>
         </div>
-      )}
-    </nav>
+
+        {/* 📱 Mobile Menu + Click Outside to Close */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <>
+              {/* Backdrop to Close on Click Outside */}
+              <motion.div
+                className="fixed inset-0 bg-black bg-opacity-50 z-40"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={handleMobileNavClick}
+              />
+
+              {/* Slide-in Menu */}
+              <motion.div
+                initial={{ opacity: 0, x: "100%" }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: "100%" }}
+                transition={{ duration: 0.3 }}
+                className="fixed top-0 right-0 w-64 h-full bg-white shadow-lg md:hidden flex flex-col z-50 p-6"
+              >
+                {/* Close Button */}
+                <button
+                  onClick={handleMobileNavClick}
+                  className="self-end text-3xl text-gray-700 focus:outline-none"
+                  aria-label="Close menu"
+                >
+                  ✕
+                </button>
+
+                <ul className="flex text-xl flex-col space-y-4 mt-4">
+                  {navLinks.map(({ name, path }, index) => (
+                    <motion.li
+                      key={index}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <Link
+                        href={path}
+                        className="block text-lg text-gray-700 hover:text-gray-400 transition font-medium"
+                        onClick={handleMobileNavClick}
+                      >
+                        {name}
+                      </Link>
+                    </motion.li>
+                  ))}
+
+                  {/* 🔑 Login & Signup Buttons (Mobile) */}
+                  <div className="flex flex-col space-y-3 mt-4">
+                    <Link href="/login">
+                      <button
+                        onClick={handleMobileNavClick}
+                        className="w-full px-5 py-2 border border-blue-700 text-blue-700 rounded-md hover:bg-blue-700 hover:text-white transition"
+                      >
+                        Login
+                      </button>
+                    </Link>
+                    <Link href="/signup">
+                      <button
+                        onClick={handleMobileNavClick}
+                        className="w-full px-5 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800 transition"
+                      >
+                        Sign Up
+                      </button>
+                    </Link>
+                  </div>
+                </ul>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+      </nav>
+
+      {/* Fix Layout Shift */}
+      <div className="h-[70px]" />
+    </>
   );
 }
