@@ -14,7 +14,6 @@
     "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
     "@heroicons/react": "^2.2.0",
     "@next-auth/prisma-adapter": "^1.0.7",
-    "@supabase/supabase-js": "^2.48.1",
     "@types/next-auth": "^3.13.0",
     "emailjs-com": "^3.2.0",
     "firebase": "^11.3.1",
