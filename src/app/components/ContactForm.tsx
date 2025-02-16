@@ -69,7 +69,7 @@ export default function ContactUsPage() {
             Get in Touch
           </h1>
           <p className="mt-4 text-lg font-light drop-shadow-md max-w-2xl mx-auto">
-            Have any questions? We'd love to hear from you!
+            Have any questions? We&apos;d love to hear from you!
           </p>
         </motion.div>
       </div>

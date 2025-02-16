@@ -1,80 +1,97 @@
 "use client";
 
 import { useState } from "react";
-import { auth } from "../lib/firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "../lib/firebaseConfig"; 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { motion } from "framer-motion";
 
-const Signup = () => {
+export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleSignup = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setError("");
+
+    // Basic form validation
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      setError("All fields are required.");
+      return;
+    }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
+
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      setLoading(true);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(userCredential.user, { displayName: name });
       router.push("/dashboard");
-    } catch (error: any) {
-      alert(error.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error("Registration error:", err); // Logs error for debugging
+        setError(getFirebaseErrorMessage(err.message));
+      } else {
+        setError("An unexpected error occurred.");
+      }
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-500 to-purple-600">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        className="p-8 bg-white/20 backdrop-blur-lg shadow-xl rounded-2xl max-w-md w-full"
-      >
-        <h2 className="text-3xl font-bold text-center text-white mb-6">
-          Create Your Account 🚀
-        </h2>
+  // Function to handle Firebase errors
+  const getFirebaseErrorMessage = (message: string) => {
+    if (message.includes("auth/email-already-in-use")) return "This email is already in use.";
+    if (message.includes("auth/invalid-email")) return "Invalid email address.";
+    if (message.includes("auth/weak-password")) return "Password is too weak.";
+    return "Registration failed. Please try again.";
+  };
 
-        <form onSubmit={handleSignup} className="flex flex-col">
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 px-4">
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-md">
+        <h2 className="text-center text-2xl font-bold dark:text-white">Sign Up</h2>
+        {error && <p className="text-red-500 text-sm text-center mt-2">{error}</p>}
+        <form onSubmit={handleRegister} className="flex flex-col gap-4 mt-4">
+          <input
+            type="text"
+            placeholder="Full Name"
+            className="p-2 border rounded dark:bg-gray-700 dark:text-white"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
           <input
             type="email"
-            placeholder="Email Address"
-            className="p-3 bg-white/50 border border-white rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-gray-700 text-gray-900"
+            placeholder="Email"
+            className="p-2 border rounded dark:bg-gray-700 dark:text-white"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
           />
           <input
             type="password"
-            placeholder="Password"
-            className="p-3 bg-white/50 border border-white rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-gray-700 text-gray-900"
+            placeholder="Password (min. 6 characters)"
+            className="p-2 border rounded dark:bg-gray-700 dark:text-white"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
           />
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 rounded-lg font-semibold shadow-lg transition-all"
+          <button
             type="submit"
+            className={`p-2 rounded text-white ${loading ? "bg-gray-500" : "bg-green-500 hover:bg-green-600"}`}
             disabled={loading}
           >
-            {loading ? "Creating Account..." : "Sign Up"}
-          </motion.button>
+            {loading ? "Registering..." : "Sign Up"}
+          </button>
         </form>
-
-        <p className="mt-4 text-center text-white">
-          Already have an account?{" "}
-          <Link href="/login" className="text-yellow-300 font-semibold hover:underline">
-            Login here
-          </Link>
+        <p className="text-center mt-4 text-sm text-gray-600 dark:text-gray-400">
+          Already have an account? <Link href="/login" className="text-blue-500">Login</Link>
         </p>
-      </motion.div>
+      </div>
     </div>
   );
-};
-
-export default Signup;
+}

@@ -25,7 +25,7 @@ const AdmissionPage = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5 }}
         >
-          Follow these simple steps to complete your admission at Firoza Khatoon Women College.
+          Follow these simple steps to complete your admission at Firoza Khatoon Women&apos;s College.
         </motion.p>
       </section>
 
@@ -75,7 +75,7 @@ const AdmissionPage = () => {
             <li>📄 Original **matriculation admit card** & 1 copy.</li>
             <li>📜 **Original Character Certificate** from the last institution attended.</li>
             <li>🆔 **B-Form (Original)** & 1 copy.</li>
-            <li>🆔 **Parents' CNIC (Original)** & 1 copy each.</li>
+            <li>🆔 **Parents&apos; CNIC (Original)** & 1 copy each.</li>
             <li>📸 **Two passport-size photographs** (Sky blue background & white scarf).</li>
           </ul>
         </motion.div>

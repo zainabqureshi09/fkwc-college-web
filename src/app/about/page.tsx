@@ -7,7 +7,7 @@ import { Merienda } from "next/font/google";
 
 const merienda = Merienda({ subsets: ["latin"], weight: "700" });
 
-// Dynamic Cursor Effect
+// Typing Animation Data
 const cursorColors = ["#1E90FF", "#FF4500", "#32CD32", "#FFD700"];
 const typingTexts = ["Empowering Women Through Education", "Building a Brighter Future", "Join Us Today!"];
 
@@ -20,16 +20,17 @@ export default function AboutPage() {
 
   useEffect(() => {
     const typingSpeed = isDeleting ? 50 : 150;
+    const pauseDuration = 2000;
+
     const timeout = setTimeout(() => {
       if (!isDeleting && charIndex < typingTexts[textIndex].length) {
         setDisplayText((prev) => prev + typingTexts[textIndex][charIndex]);
-        setCharIndex(charIndex + 1);
+        setCharIndex((prev) => prev + 1);
       } else if (isDeleting && charIndex > 0) {
         setDisplayText((prev) => prev.slice(0, -1));
-        setCharIndex(charIndex - 1);
+        setCharIndex((prev) => prev - 1);
       } else if (!isDeleting && charIndex === typingTexts[textIndex].length) {
-        setIsDeleting(true);
-        setTimeout(() => setIsDeleting(false), 1000);
+        setTimeout(() => setIsDeleting(true), pauseDuration);
       } else {
         setIsDeleting(false);
         setTextIndex((prev) => (prev + 1) % typingTexts.length);
@@ -37,8 +38,9 @@ export default function AboutPage() {
         setCursorColorIndex((prev) => (prev + 1) % cursorColors.length);
       }
     }, typingSpeed);
+
     return () => clearTimeout(timeout);
-  }, [charIndex, isDeleting]);
+  }, [charIndex, isDeleting, textIndex]);
 
   return (
     <main>
@@ -122,6 +124,7 @@ export default function AboutPage() {
               width={600}
               height={400}
               className="w-full h-auto rounded-lg object-cover"
+              priority={true} // Ensures faster loading
             />
           </motion.div>
         </div>
@@ -135,7 +138,7 @@ export default function AboutPage() {
         </p>
         <motion.a
           href="/admissions"
-          className="mt-6 inline-block px-8 py-4 bg-white text-blue-700 font-semibold text-lg rounded-full shadow-lg transition-all duration-500 hover:scale-105"
+          className="mt-6 inline-block px-8 py-4 bg-blue-600 text-white font-semibold text-lg rounded-full shadow-lg transition-all duration-500 hover:scale-105"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           whileHover={{ scale: 1.1 }}

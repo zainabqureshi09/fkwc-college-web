@@ -47,7 +47,7 @@ export default function Chatbot() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          💬 Let's Chat With Me!
+          💬 Let&apos;s Chat With Me!
         </motion.div>
       )}
 

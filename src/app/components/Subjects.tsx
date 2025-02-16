@@ -2,8 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
-import LearningMaterials from "./Learning";
+// import LearningMaterials from "./Learning";
 // import Chatbot from "./Agent";
 
 const subjectGroups = [
@@ -120,15 +119,8 @@ const LearningPage = () => {
         <Image src="/editedfkwc_page-0001.jpg" alt="Yearly Calendar" width={600} height={400} className="rounded-lg mx-auto mt-4" />
       </div>
 
-      {/* 📊 Results Section */}
-      <div className="text-center">
-        <h2 className="text-3xl font-bold">📊 Find Your Results</h2>
-        <p className="text-lg text-gray-700">Click below to check your results:</p>
-        <Link href="https://script.google.com/macros/s/AKfycbzhkM5BHHceFzFC-bJ741BIJ4KQhmJkz7bVqXpE4Ky1PTtQseLB3saJfpOoWoLqHQrwWg/exec" target="_blank" className="text-blue-600 font-semibold hover:underline">
-          View Results
-        </Link>
-      </div>
-      <LearningMaterials />
+     
+      {/* <LearningMaterials /> */}
     </div>
   );
 };
